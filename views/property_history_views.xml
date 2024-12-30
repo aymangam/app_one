@@ -1,0 +1,80 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="property_history_tree_view">
+            <field name="name">property history tree</field>
+            <field name="model">property.history</field>
+            <field name="arch" type="xml">
+                <tree create="0" edit="0" delete="0">
+                    <field name="user_id"/>
+                    <field name="property_id"/>
+                    <field name="old_state"/>
+                    <field name="new_state"/>
+                    <field name="create_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="property_history_form_view">
+            <field name="name">property history form</field>
+            <field name="model">property.history</field>
+            <field name="arch" type="xml">
+                <form create="0" edit="0" delete="0">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="user_id"/>
+                                <field name="property_id"/>
+                                <field name="create_date"/>
+                            </group>
+                            <group>
+                                <field name="old_state"/>
+                                <field name="new_state"/>
+                                <field name="reason"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Bedrooms">
+                                <field name="line_ids" readonly="1">
+                                    <tree>
+                                        <field name="description"/>
+                                        <field name="area"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="property_history_search_view">
+            <field name="name">property history search</field>
+            <field name="model">property.history</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="user_id" filter_domain="['|', ('user_id','ilike',self), ('property_id','ilike',self)]"
+                           string="Search"/>
+
+                    <filter name="group_user" string="User" context="{'group_by': 'user_id'}"/>
+                    <separator/>
+                    <filter name="group_property" string="Property" context="{'group_by': 'property_id'}"/>
+                </search>
+            </field>
+        </record>
+
+
+        <!-- actions opening views on models -->
+
+        <record model="ir.actions.act_window" id="property_history_action">
+            <field name="name">Property History</field>
+            <field name="res_model">property.history</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem
+                id="properties_history_menu_item"
+                name="History"
+                parent="properties_menu"
+                action="property_history_action"/>
+    </data>
+</odoo>

@@ -1,0 +1,10 @@
+@font-face {
+font-family: "SixtyfourConvergence";
+src: url(/app_one/static/src/fonts/SixtyfourConvergence-Regular-VariableFont_BLED,SCAN,XELA,YELA.ttf)
+}
+
+@font-face {
+font-family: "Workbench";
+src: url(/app_one/static/src/fonts/Workbench-Regular-VariableFont_BLED,SCAN.ttf)
+}
+

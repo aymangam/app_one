@@ -1,0 +1,71 @@
+<odoo>
+    <data>
+        <!-- explicit list view definition -->
+
+        <record model="ir.ui.view" id="building_tree_view">
+            <field name="name">building tree</field>
+            <field name="model">building</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="no"/>
+                    <field name="code"/>
+                    <field name="description"/>
+                    <field name="active" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="building_form_view">
+            <field name="name">building form</field>
+            <field name="model">building</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="code"/>
+                        </group>
+                        <group>
+                            <field name="no"/>
+                        </group>
+                        <group>
+                            <field name="description"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"
+                               options="{'post_refresh': 'recipients'}"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="building_search_view">
+            <field name="name">building search</field>
+            <field name="model">building</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="no"/>
+                    <field name="code"/>
+                    <field name="active"/>
+
+                    <filter name="is_archive" string="Archive" domain="[('active', '=', 0)]"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="building_action">
+            <field name="name">building</field>
+            <field name="res_model">building</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem
+                id="building_menu_item"
+                name="Building"
+                parent="properties_menu"
+                action="building_action"/>
+    </data>
+</odoo>

@@ -1,0 +1,97 @@
+<odoo>
+    <record id="property_report" model="ir.actions.report">
+        <field name="name">Property Report</field>
+        <field name="model">property</field>
+        <field name="report_type">qweb-pdf</field>  <!-- <field name="report_type">qweb-html</field> -->
+        <field name="binding_model_id" ref="model_property"/>
+        <field name="binding_type">report</field>
+        <field name="report_name">app_one.property_report_template</field>
+        <!--        <field name="report_file">l10n_{{code}}_hr_payroll.report_payslip_{{code}}_lang</field>-->
+        <!--        <field name="print_report_name">'Payslip - %s' % (object.employee_id.name)</field>-->
+        <!-- Erase fields to avoid double PDF posting -->
+        <!--        <field name="attachment"></field>-->
+        <!--        <field name="attachment_use" eval="False"/>-->
+    </record>
+    <template id="property_report_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">  <!-- <t t-call="web.basic_layout"> -->
+                    <div class="page">
+                        <div class="oe_structure"/>
+                        <div class="row mt8">
+                            <h1 style="font-family: 'SixtyfourConvergence';">Property Report</h1>
+                            <style>
+                                table {
+                                width: 100%;
+                                border:1px solid #b3adad;
+                                border-collapse:collapse;
+                                padding:5px;
+                                }
+                                table th {
+                                border:1px solid #b3adad;
+                                padding:5px;
+                                background: #f0f0f0;
+                                color: #313030;
+                                text-align:center;
+                                }
+                                table td {
+                                border:1px solid #b3adad;
+                                text-align:center;
+                                padding:5px;
+                                background: #ffffff;
+                                color: #313030;
+                                }
+                            </style>
+                            <table>
+                                <thead>
+                                    <th colspan="4">General Information</th>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Name</td>
+                                        <td><t t-esc="o.name"/></td>
+                                        <td>Postcode</td>
+                                        <td><t t-esc="o.postcode"/></td>
+                                    </tr>
+                                </tbody>
+                                <thead>
+                                    <th colspan="4">Additional Information</th>
+                                </thead>
+                                <tbody>
+                                    <td>Owner</td>
+                                    <td>
+                                        <t t-esc="o.owner_id.name"/>
+                                    </td>  <!-- <td><span t-field="o.owner_id"/></td> -->
+                                    <td>Phone</td>
+                                    <td>
+                                        <t t-esc="o.owner_phone"/>
+                                    </td>
+                                </tbody>
+                            </table>
+                            <br/>
+                            <table>
+                                <thead>
+                                    <th>Description</th>
+                                    <th>Area</th>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="o.line_ids" t-as="line">
+                                        <tr>
+                                            <td>
+                                                <t t-esc="line.description"/>
+                                            </td>
+                                            <td>
+                                                <t t-esc="line.area"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="oe_structure"/>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>
